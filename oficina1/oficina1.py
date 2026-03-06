@@ -19,7 +19,7 @@ class ActuatorListener(stomp.ConnectionListener):
         global current_temp_cmd, current_light_cmd
         topic = frame.headers.get("destination", "")
         cmd = frame.body.strip()
-        print(f"[Actuador recibido en {topic}]: {cmd}")
+        print(f"\033[31m[Actuador recibido en {topic}]: {cmd}\033[0m")
 
         if "temperature" in topic:
             current_temp_cmd = cmd
