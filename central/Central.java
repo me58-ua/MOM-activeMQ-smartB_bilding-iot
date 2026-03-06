@@ -15,16 +15,16 @@ public class Central {
     private static final double LIGHT_MIN   = 300.0;
     
     // topics Sensors (oficina → central)
-    private static final String O1_TEMP_SENSOR  = "office1.sensors.temperature";
-    private static final String O1_LIGHT_SENSOR = "office1.sensors.lighting";
-    private static final String O2_TEMP_SENSOR  = "office2.sensors.temperature";
-    private static final String O2_LIGHT_SENSOR = "office2.sensors.lighting";
+    private static final String O1_TEMP_SENSOR  = "oficina1.sensors.temperature";
+    private static final String O1_LIGHT_SENSOR = "oficina1.sensors.lighting";
+    private static final String O2_TEMP_SENSOR  = "oficina2.sensors.temperature";
+    private static final String O2_LIGHT_SENSOR = "oficina2.sensors.lighting";
 
     // topics Actuators (central → oficina)
-    private static final String O1_TEMP_ACT     = "office1.actuators.temperature";
-    private static final String O1_LIGHT_ACT    = "office1.actuators.lighting";
-    private static final String O2_TEMP_ACT     = "office2.actuators.temperature";
-    private static final String O2_LIGHT_ACT    = "office2.actuators.lighting";
+    private static final String O1_TEMP_ACT     = "oficina1.actuators.temperature";
+    private static final String O1_LIGHT_ACT    = "oficina1.actuators.lighting";
+    private static final String O2_TEMP_ACT     = "oficina2.actuators.temperature";
+    private static final String O2_LIGHT_ACT    = "oficina2.actuators.lighting";
 
     private static Map<String, Double> sensorValues = new ConcurrentHashMap<>();
 
