@@ -1,6 +1,6 @@
-﻿# MOM-activeMQ-smartB_bilding-iot
+# MOM-activeMQ-smartB_bilding-iot
 
- ## Overview
+## Overview
 This project implements a smart building control system using **Apache ActiveMQ** as the MOM broker.
 The goal is to practice asynchronous, decoupled communication between distributed systems using
 the publish/subscribe messaging pattern.
@@ -17,6 +17,23 @@ real Arduino sensors and actuators via software.
   every 2 seconds and reacts to actuator commands by adjusting values gradually.
 - **Oficina 2 (Node.js)**: Same logic as Oficina 1 but implemented in Node.js.
 
+---
+
+## Security
+
+Authentication is enforced at both the **broker level** and **terminal level**:
+
+- `activemq.xml` is configured with `simpleAuthenticationPlugin` — anonymous access is disabled and
+  every connection must provide valid credentials.
+- Each terminal (`Central`, `Oficina1`, `Oficina2`) prompts for a password on startup and will not
+  connect until the correct password is entered.
+- Credentials are loaded from a `config.properties` file (not hardcoded).
+
+### Setup
+Copy the example config and fill in your passwords:
+```bash
+cp config.example.properties config.properties
+```
 ---
 
 ## Topics
@@ -54,14 +71,3 @@ real Arduino sensors and actuators via software.
 | Lighting | 200 lux | 1000 lux |
 
 ---
-
-## Requirements
-
-- **Apache ActiveMQ 5.15.8**
-- **Java JDK 21+**
-- **Python 3.12+** with `stomp.py` → `pip install stomp.py`
-- **Node.js** with `stompit` → `npm install stompit`
-
----
-
-
