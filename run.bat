@@ -28,6 +28,14 @@ call :oficina2
 goto menu
 
 :central
+echo Compilando Central...
+javac -cp "%~dp0activemq-all-5.15.8.jar" "%~dp0central\Central.java"
+if %errorlevel% neq 0 (
+    echo ERROR: Fallo la compilacion de Central.
+    pause
+    goto :eof
+)
+echo Compilacion exitosa. Levantando Central...
 start "Central (Java)" cmd /k "cd /d %~dp0 && java -cp .;activemq-all-5.15.8.jar central.Central"
 goto :eof
 
