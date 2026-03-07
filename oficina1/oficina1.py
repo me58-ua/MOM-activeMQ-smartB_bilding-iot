@@ -1,6 +1,7 @@
 import stomp
 import time
 import random
+import configparser
 
 HOST = "localhost"
 PORT = 61613
@@ -27,9 +28,19 @@ class ActuatorListener(stomp.ConnectionListener):
             current_light_cmd = cmd
 
 def main():
+    config = configparser.ConfigParser()
+    config.read("../config.properties")
+    expected_pass = config["DEFAULT"]["oficina1_password"]
+
+    while True:
+        password = input("Introduce contraseña: ")
+        if password == expected_pass:
+            break
+        print("\033[31m[Contraseña incorrecta, inténtalo de nuevo.\033[0m")
+
     conn = stomp.Connection([(HOST, PORT)])
     conn.set_listener("", ActuatorListener())
-    conn.connect(login="admin", passcode="admin", wait=True)
+    conn.connect(login="oficina1", passcode=expected_pass, wait=True)
 
     conn.subscribe(destination=TEMP_ACT,  id=1, ack="auto")
     conn.subscribe(destination=LIGHT_ACT, id=2, ack="auto")

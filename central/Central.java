@@ -3,12 +3,13 @@ package central;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import javax.jms.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.io.FileInputStream;
 import java.util.Map;
-
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.util.Properties;
 
 public class Central {
-    private static final String url = "tcp://localhost:61616";
-    
     private static final double TEMP_MAX    = 25.0;  // activate cooling above this
     private static final double TEMP_MIN    = 18.0;  // activate heating below this
     private static final double LIGHT_MAX   = 1000.0; // dim lights above this
@@ -31,8 +32,24 @@ public class Central {
     
     private static final String RED   = "\u001B[31m";
     private static final String RESET = "\u001B[0m";
+
     public static void main(String[] args) throws Exception{
-        ConnectionFactory factory = new ActiveMQConnectionFactory(url);
+        //parte de seguridad
+        Properties props = new Properties();
+        props.load(new FileInputStream("config.properties"));
+        String expectedPass = props.getProperty("central_password");
+
+        Scanner sc = new Scanner(System.in);
+        String pass;
+        do {
+            System.out.print("Enter password: ");
+            pass = sc.nextLine();
+            if (!pass.equals(expectedPass)) System.out.println(RED + "Contraseña incorrecta, intenta otra vez." + RESET);
+        } while (!pass.equals(expectedPass));
+
+        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        factory.setUserName("central");
+        factory.setPassword(expectedPass);
         Connection conn = factory.createConnection();
 
         conn.start();
